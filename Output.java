@@ -5,8 +5,7 @@
 import java.util.Scanner; 
 
 public class Output{
-    private int[] numArray; // creates an array with the numbers inside 
-    private int non; // stores what array length is 
+    private String expression; // creates a string that holds the expression e.x "2+2x3" 
     private Arithmetic arithmetic; 
 
     public static void main(String[] args) {
@@ -26,8 +25,7 @@ public class Output{
     public void addNum(){
         Scanner myObj = new Scanner(System.in);
         int userInput = myObj.nextInt(); 
-        numArray[non] = userInput; 
-        non++; 
+        expression += String.valueOf(userInput);
     }
 
     // gets the operation from the user
@@ -37,9 +35,9 @@ public class Output{
         return userOperation;
     }
     // checks which operation the user wants to do from getOperation 
-    public void doOperation(){
+    public void doOperation() throws Unrecognizedexpression{
          if(this.getOperation().isEmpty()){
-            return; 
+            throw new Unrecognizedexpression("Please enter a valid expression."); 
         } else if(this.getOperation().equals("+")){
            // think of a better way to add numbers later
             arithmetic.add(numArray[0], numArray[1]); 
