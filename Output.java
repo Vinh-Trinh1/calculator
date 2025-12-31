@@ -16,8 +16,7 @@ public class Output{
         o.addNum(); 
     }
     public Output(){
-        numArray = new int[100];
-        non = 0; 
+        expression = ""; 
         arithmetic = new Arithmetic(); 
     }
 
@@ -38,19 +37,21 @@ public class Output{
     public void doOperation() throws Unrecognizedexpression{
          if(this.getOperation().isEmpty()){
             throw new Unrecognizedexpression("Please enter a valid expression."); 
-        } else if(this.getOperation().equals("+")){
-           // think of a better way to add numbers later
-            arithmetic.add(numArray[0], numArray[1]); 
+        else{
+            for (int i = 0; i < expression.length(); i++){
+                char ch = expression.charAt(i);
+                if (ch == "+"){
+                    arithmetic.add(); 
+                }
+            }
+            // } else if(this.getOperation().equals("+")){
+            // // think of a better way to add numbers later
+            // arithmetic.add();  
 
+            }
         }
     }
 
-    public int[] getNumArray(){
-        return numArray; 
-    }
-    public int getNon(){
-        return non; 
-    }
 
     // think of how to implement this later
     public String toString(){
