@@ -3,18 +3,22 @@
 * and return the results */ 
 
 import java.util.Scanner; 
+import java.util.regex.Pattern; // for regular expressions, to detect numbers and operations
+import java.util.regex.Matcher; // for regular expressions, to search for numbers or operations in the string
+import java.util.ArrayList; 
 
 public class Output{
     private String expression; // creates a string that holds the expression e.x "2+2x3" 
     private Arithmetic arithmetic; 
+    private ArrayList<Integer> numbers = new ArrayList<Integer>(); 
 
     public static void main(String[] args) {
         Output o = new Output(); 
-        o.addNum();
-        System.out.println(o.getNumArray()); 
+        o.addNum(); 
         o.getOperation(); 
         o.addNum(); 
     }
+
     public Output(){
         expression = ""; 
         arithmetic = new Arithmetic(); 
@@ -33,26 +37,41 @@ public class Output{
         String userOperation = myObj.nextLine();
         return userOperation;
     }
-    // checks which operation the user wants to do from getOperation 
-    public void doOperation() throws Unrecognizedexpression{
-         if(this.getOperation().isEmpty()){
-            throw new Unrecognizedexpression("Please enter a valid expression."); 
-        else{
-            for (int i = 0; i < expression.length(); i++){
-                char ch = expression.charAt(i);
-                if (ch == "+"){
-                    arithmetic.add(); 
-                }
-            }
-            // } else if(this.getOperation().equals("+")){
-            // // think of a better way to add numbers later
-            // arithmetic.add();  
 
-            }
+    // this searches the expression for operations or string and then calls the correct method 
+    public void searcher(){
+        Pattern numberPattern = Pattern.compile("\\d+"); // creates the number to search for 
+        Matcher numberMatcher = numberPattern.matcher(expression); // returns the matcher for number object 
+
+        Pattern operationPattern = Pattern.compile("[]"); // creates operation to search for 
+        Matcher operationMatcher = operationPattern.matcher(expression); // returns the number for operation 
+
+        // iterates through the string checking for numbers
+        while(numberMatcher.find()){
+            String numberStr = numberMatcher.group(); 
+            numbers.add(Integer.parseInt(numberStr)); 
+        }
+
+        // iterates through the string checking for operations
+        while(operationMatcher.find()){
+            this.doOperation(); 
         }
     }
 
+    // checks which operation the user wants to do from getOperation 
+    public void doOperation() {
+        
+        // for (int i = 0; i < expression.length(); i++){
+        //     char ch = expression.charAt(i);
+        //     if (ch == "+"){
+        //         arithmetic.add(); 
+        //     } else if (ch == "-"){
+        //         arithmetic.subtract(); 
+        //     }
+        // }
 
+    }
+    
     // think of how to implement this later
     public String toString(){
         return ""; 
