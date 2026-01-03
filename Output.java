@@ -13,10 +13,8 @@ public class Output{
     private ArrayList<Integer> numbers = new ArrayList<Integer>(); 
 
     public static void main(String[] args) {
-        Output o = new Output(); 
-        o.addNum(); 
-        o.getOperation(); 
-        o.addNum(); 
+        Output o = new Output();
+        o.userInput(); 
     }
 
     public Output(){
@@ -24,19 +22,24 @@ public class Output{
         arithmetic = new Arithmetic(); 
     }
 
-    // gets the number from the user and adds it to the array 
-    public void addNum(){
-        Scanner myObj = new Scanner(System.in);
-        int userInput = myObj.nextInt(); 
-        expression += String.valueOf(userInput);
+    // gets the expression from the user and add it to expression 
+    public void userInput(){
+        Scanner obj = new Scanner(System.in); // creates user input 
+
+
+        System.out.println("Enter the expression you want to calculate: ");
+      
+        boolean endLoop = true; 
+        // while loop to continously get user input until "=" is entered
+        while(endLoop){
+            String operation = obj.nextLine(); 
+            expression += operation; 
+            if (operation.replaceAll("\\s+", " ").equals("=")){ endLoop = false; }
+        }
+        
     }
 
-    // gets the operation from the user
-    public String getOperation(){
-        Scanner myObj = new Scanner(System.in);
-        String userOperation = myObj.nextLine();
-        return userOperation;
-    }
+
 
     // this searches the expression for operations or string and then calls the correct method 
     public void searcher(){
