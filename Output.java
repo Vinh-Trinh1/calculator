@@ -25,19 +25,15 @@ public class Output{
     // gets the expression from the user and add it to expression 
     public void userInput(){
         Scanner obj = new Scanner(System.in); // creates user input 
-
-
         System.out.println("Enter the expression you want to calculate: ");
-      
         boolean endLoop = true; 
-        // while loop to continously get user input until "=" is entered
+        // while loop to continously get user input until "=" is entered and then loop is stopped
         while(endLoop){
             String operation = obj.nextLine(); 
             expression += operation; 
-            if (operation.replaceAll("\\s+", " ").equals("=")){ endLoop = false; }
+                if (operation.replaceAll("\\s+", " ").equals("=")){ endLoop = false; }
+            }
         }
-        
-    }
 
 
 
@@ -46,32 +42,34 @@ public class Output{
         Pattern numberPattern = Pattern.compile("\\d+"); // creates the number to search for 
         Matcher numberMatcher = numberPattern.matcher(expression); // returns the matcher for number object 
 
-        Pattern operationPattern = Pattern.compile("[]"); // creates operation to search for 
+        Pattern operationPattern = Pattern.compile("[()/+-*!]"); // creates operation to search for 
         Matcher operationMatcher = operationPattern.matcher(expression); // returns the number for operation 
 
         // iterates through the string checking for numbers
         while(numberMatcher.find()){
             String numberStr = numberMatcher.group(); 
+            // adds the number into an array 
             numbers.add(Integer.parseInt(numberStr)); 
         }
 
         // iterates through the string checking for operations
         while(operationMatcher.find()){
-            this.doOperation(); 
+            String s = operationMatcher.group(); 
+            this.doOperation(s); 
         }
     }
 
     // checks which operation the user wants to do from getOperation 
-    public void doOperation() {
-        
-        // for (int i = 0; i < expression.length(); i++){
-        //     char ch = expression.charAt(i);
-        //     if (ch == "+"){
-        //         arithmetic.add(); 
-        //     } else if (ch == "-"){
-        //         arithmetic.subtract(); 
-        //     }
-        // }
+    public void doOperation(String s) {
+        if(s.equals("+")){
+            arithmetic.add(1, 2); 
+        } else if(s.equals("-")){
+            arithmetic.subtract(); 
+        } else if(s.equals("*")){
+            arithmetic.multiplication();
+        } else if (s.equals("/")){
+            arithmetic.division(); 
+        }
 
     }
     
