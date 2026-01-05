@@ -41,7 +41,7 @@ public class Output{
 
 
     // this searches the expression for operations or string and then calls the correct method 
-    public void searcher(){
+    public void searcher() throws Unrecognizedexpression{ 
         Pattern numberPattern = Pattern.compile("\\d+"); // creates the number to search for 
         Matcher numberMatcher = numberPattern.matcher(expression); // returns the matcher for number object 
 
@@ -60,6 +60,10 @@ public class Output{
             String s = operationMatcher.group(); 
             operationStack.push(s); 
             this.doOperation(s); 
+        }
+
+        if (!numberMatcher.find() && !operationMatcher.find() ){
+            throw new Unrecognizedexpression("Invalid Expression. Try again. ");
         }
     }
 
