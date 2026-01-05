@@ -33,8 +33,10 @@ public class Output{
         while(endLoop){
             String operation = obj.nextLine(); 
             expression += operation; 
-                if (operation.replaceAll("\\s+", " ").equals("=")){ endLoop = false; } 
-                else if(operation.contains("=")) { endLoop=false; }
+                // stops the expression when an "=" is entered 
+                if(operation.contains("=")) { endLoop=false; }
+               // else if (){}
+            
             }
         }
 
@@ -45,8 +47,15 @@ public class Output{
         Pattern numberPattern = Pattern.compile("\\d+"); // creates the number to search for 
         Matcher numberMatcher = numberPattern.matcher(expression); // returns the matcher for number object 
 
-        Pattern operationPattern = Pattern.compile("[()/+-*!]"); // creates operation to search for 
-        Matcher operationMatcher = operationPattern.matcher(expression); // returns the number for operation 
+        Pattern additionSubtractionPattern = Pattern.compile("[+-]"); // creates operation to search for 
+        Matcher additionSubtractionMatcher = additionSubtractionPattern.matcher(expression); // returns the number for operation 
+
+        Pattern bracketsPattern = Pattern.compile("[()]"); 
+        Matcher bracketsMatcher = bracketsPattern.matcher(expression); 
+
+        Pattern multiplicationDivisionPattern = Pattern.compile("[*/]");
+        Matcher multiplicationDivisionMatcher = multiplicationDivisionPattern.matcher(expression); 
+
 
         // iterates through the string checking for numbers
         while(numberMatcher.find()){
@@ -56,14 +65,19 @@ public class Output{
         }
 
         // iterates through the string checking for operations
-        while(operationMatcher.find()){
-            String s = operationMatcher.group(); 
+        while(additionSubtractionMatcher.find()){
+            String s = additionSubtractionMatcher.group(); 
             operationStack.push(s); 
             this.doOperation(s); 
         }
 
-        if (!numberMatcher.find() && !operationMatcher.find() ){
-            throw new Unrecognizedexpression("Invalid Expression. Try again. ");
+        while(multiplicationDivisionMatcher.find()){
+            String s = multiplicationDivisionMatcher.group(); 
+            operationStack.push(s); 
+        }
+        while(bracketsMatcher.find()){
+            String s = bracketsMatcher.group(); 
+            operationStack.push(s); 
         }
     }
 
